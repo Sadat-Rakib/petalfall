@@ -1,0 +1,75 @@
+{
+  "name": "petalfall",
+  "version": "0.1.0",
+  "description": "A procedurally grown cherry blossom tree or bonsai for your page: falling petals, wandering wind, weather and rain. Plain TypeScript and Canvas, about 21 KB gzipped, no dependencies.",
+  "keywords": [
+    "petalfall",
+    "sakura",
+    "cherry-blossom",
+    "bonsai",
+    "petals",
+    "canvas",
+    "animation",
+    "generative-art",
+    "procedural",
+    "pixel-art",
+    "background",
+    "wallpaper",
+    "web-component",
+    "custom-element",
+    "weather",
+    "rain",
+    "typescript"
+  ],
+  "license": "MIT",
+  "author": "Mir Sadat Bin Rakib",
+  "homepage": "https://github.com/Sadat-Rakib/petalfall#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sadat-Rakib/petalfall.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Sadat-Rakib/petalfall/issues"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "unpkg": "./lib/petalfall.iife.js",
+  "jsdelivr": "./lib/petalfall.iife.js",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    },
+    "./element": {
+      "types": "./lib/element.d.ts",
+      "import": "./lib/element.js",
+      "default": "./lib/element.js"
+    },
+    "./iife": "./lib/petalfall.iife.js",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "./lib/element.js",
+    "./lib/petalfall.iife.js"
+  ],
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "build:lib": "node -e \"require('fs').rmSync('lib',{recursive:true,force:true})\" && vite build -c vite.lib.config.ts && vite build -c vite.cdn.config.ts && tsc -p tsconfig.lib.json",
+    "prepublishOnly": "npm run build:lib"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
+  }
+}

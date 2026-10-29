@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1a1322" />
+    <meta name="description" content="Petalfall is a procedurally grown cherry blossom tree and bonsai with petals drifting down on the wind." />
+    <meta property="og:title" content="Petalfall 花吹雪" />
+    <meta property="og:description" content="A procedurally grown cherry blossom tree and bonsai: falling petals, wandering wind, weather and rain. Plain TypeScript and Canvas, no dependencies." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/Sadat-Rakib/petalfall/main/docs/preview-weeping-rain.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Petalfall 花吹雪" />
+    <meta name="twitter:description" content="A procedurally grown cherry blossom tree and bonsai: falling petals, wandering wind, weather and rain." />
+    <meta name="twitter:image" content="https://raw.githubusercontent.com/Sadat-Rakib/petalfall/main/docs/preview-weeping-rain.jpg" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Petalfall</title>
+    <style>
+      /* Shown before the stylesheet arrives (the first paint, and always in development, where the
+         stylesheet is added by script). A dark page, and no half-styled controls: style.css turns the body on. */
+      html { background: #1a1322; }
+      body { margin: 0; visibility: hidden; }
+    </style>
+    <noscript><style>body { visibility: visible; }</style></noscript>
+  </head>
+  <body>
+    <div id="stage" role="img" aria-label="A cherry blossom tree with petals falling around it"></div>
+
+    <a class="gh" id="gh-link" href="https://github.com/Sadat-Rakib/petalfall" target="_blank" rel="noopener noreferrer" aria-label="View the source on GitHub" title="View on GitHub">
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      <span class="gh-stars" id="gh-stars" hidden>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span id="gh-count"></span>
+      </span>
+    </a>
+
+    <header class="brand"><span class="kanji" id="brand-kanji">花吹雪</span> <span id="brand-name">Petalfall</span></header>
+
+    <p class="hint" id="hint">
+      click the tree to shake it <i>·</i> <kbd>r</kbd> regrow <i>·</i> <kbd>t</kbd> sakura / bonsai <i>·</i> <kbd>w</kbd> wind strength
+      <i>·</i> <kbd>e</kbd> weather <i>·</i> <kbd>y</kbd> rain <i>·</i> move to the bottom edge for the controls
+    </p>
+
+    <div class="bar" id="bar" role="toolbar" aria-label="Controls">
+      <button class="btn" id="btn-ambient" type="button" title="Ambient mode: fullscreen, controls fade when idle (F)">
+        <span data-icon="maximize"></span><span class="lbl">Ambient</span><kbd>F</kbd>
+      </button>
+
+      <div class="menu-wrap">
+        <button class="btn" id="btn-fps" type="button" title="Frames per second right now. Click to set a limit." aria-haspopup="true" aria-expanded="false">
+          <span data-icon="gauge"></span><span class="lbl" id="fps-label">60 fps</span>
+        </button>
+        <div class="menu" hidden></div>
+      </div>
+
+      <button class="btn" id="btn-collapse" type="button" title="Minimise the controls">
+        <span data-icon="chevrondown"></span><span class="lbl">Minimise</span>
+      </button>
+
+      <span class="sep"></span>
+
+      <button class="btn accent" id="btn-gust" type="button" title="Send a gust through the tree (Space)">
+        <span data-icon="shuffle"></span><span class="lbl">Gust</span><kbd>Space</kbd>
+      </button>
+
+      <span class="sep"></span>
+
+      <div class="menu-wrap">
+        <button class="btn" id="btn-weather" type="button" title="Weather (E)" aria-haspopup="true" aria-expanded="false">
+          <span id="weather-icon"></span><span class="lbl" id="weather-label">Clear</span>
+        </button>
+        <div class="menu" hidden></div>
+      </div>
+
+      <div class="menu-wrap">
+        <button class="btn" id="btn-tree" type="button" title="Which tree: sakura or bonsai (T)" aria-haspopup="true" aria-expanded="false">
+          <span id="tree-icon"></span><span class="lbl" id="tree-label">Sakura</span>
+        </button>
+        <div class="menu" hidden></div>
+      </div>
+
+      <div class="menu-wrap">
+        <button class="btn" id="btn-style" type="button" title="Tree style (S)" aria-haspopup="true" aria-expanded="false">
+          <span data-icon="leaf"></span><span class="lbl" id="style-label">Yoshino</span>
+        </button>
+        <div class="menu" hidden></div>
+      </div>
+
+      <div class="menu-wrap">
+        <button class="btn" id="btn-palette" type="button" title="Blossom colour (C)" aria-haspopup="true" aria-expanded="false">
+          <i class="swatch" id="swatch"></i><span class="lbl" id="palette-label">Sakura</span>
+        </button>
+        <div class="menu" hidden></div>
+      </div>
+
+      <span class="sep"></span>
+
+      <button class="item" id="sw-detail" type="button" role="switch" aria-checked="false" title="Detail mode (D)">
+        <span data-icon="layers"></span><span class="lbl">Detail</span><span class="track"><span class="knob"></span></span>
+      </button>
+      <button class="item" id="sw-wind" type="button" role="switch" aria-checked="true" title="Wind on/off (A)">
+        <span data-icon="wind"></span><span class="lbl">Wind</span><span class="track"><span class="knob"></span></span>
+      </button>
+      <button class="item" id="sw-rain" type="button" role="switch" aria-checked="false" title="Rain (Y)">
+        <span data-icon="rain"></span><span class="lbl">Rain</span><span class="track"><span class="knob"></span></span>
+      </button>
+      <button class="item" id="sw-sound" type="button" role="switch" aria-checked="false" title="Sound: wind, rain and chimes (M)">
+        <span data-icon="volume"></span><span class="lbl">Sound</span><span class="track"><span class="knob"></span></span>
+      </button>
+    </div>
+
+    <button class="fab" id="btn-menu" type="button" title="Show the controls (drag to move)" aria-label="Show the controls" aria-expanded="false">
+      <span data-icon="menu"></span>
+    </button>
+
+    <div class="toast" id="toast" role="status"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
