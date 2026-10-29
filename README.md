@@ -65,7 +65,7 @@ you stop noticing after five seconds. I wanted a background that is *alive* but 
 
 Regrow the tree, change the weather, switch to the bonsai — the app itself is the demo:
 
-**Live demo: [petalfall.pages.dev](https://petalfall.pages.dev)**
+**Live demo: [petalfall-cyn.pages.dev](https://petalfall-cyn.pages.dev)**
 
 | A kengai bonsai in maple, under moonlight | Cell mode, sunset |
 | --- | --- |
