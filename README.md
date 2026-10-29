@@ -79,7 +79,7 @@ Regrow the tree, change the weather, switch to the bonsai. The app itself is the
 **Live demo: [petalfall-cyn.pages.dev](https://petalfall-cyn.pages.dev)**
 
 **Embed builder:** pick options with a live preview and copy ready to use code at
-[petalfall-cyn.pages.dev/embed.html](https://petalfall-cyn.pages.dev/embed.html). There is an
+[petalfall-cyn.pages.dev/embed](https://petalfall-cyn.pages.dev/embed). There is an
 Embed button in the app's control bar too.
 
 ## Tech stack
