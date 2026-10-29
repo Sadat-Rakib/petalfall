@@ -1,0 +1,382 @@
+/* The embed builder page. Dark, in the same family as the app, but self contained. */
+
+html {
+  background: #1a1322;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #1a1322;
+  color: #f5eef2;
+  font-family: ui-rounded, "SF Pro Rounded", system-ui, "Segoe UI", sans-serif;
+  visibility: visible;
+}
+
+/* ---- header --------------------------------------------------------------------- */
+
+.emb-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.emb-brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #f5eef2;
+  text-decoration: none;
+}
+
+.emb-brand .emb-kanji { color: #ffc2d4; letter-spacing: 1px; }
+
+.emb-title {
+  color: #9b8fa5;
+  font-size: 14px;
+  padding-left: 14px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.emb-spacer { flex: 1; }
+
+.emb-app-link {
+  font-size: 14px;
+  color: #ffc2d4;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 194, 212, 0.12);
+  transition: background 0.15s;
+}
+
+.emb-app-link:hover { background: rgba(255, 194, 212, 0.22); }
+
+/* ---- layout --------------------------------------------------------------------- */
+
+.emb-main {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px 20px 30px;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* ---- options panel ---------------------------------------------------------------- */
+
+.emb-panel {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-self: start;
+}
+
+.emb-group { display: flex; flex-direction: column; gap: 8px; }
+.emb-row { flex-direction: row; align-items: center; justify-content: space-between; }
+
+.emb-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9b8fa5;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.emb-value { color: #ffc2d4; letter-spacing: 0; text-transform: none; font-weight: 600; }
+
+/* segmented controls */
+.emb-seg {
+  display: flex;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.emb-seg-wrap { flex-wrap: wrap; }
+
+.emb-seg button {
+  flex: 1;
+  min-width: 56px;
+  border: 0;
+  background: none;
+  color: #b9adc2;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.emb-seg button[aria-checked="true"] {
+  background: rgba(255, 194, 212, 0.16);
+  color: #ffc2d4;
+}
+
+.emb-seg button:focus-visible { outline: 2px solid #ffc2d4; outline-offset: 1px; }
+
+/* select */
+.emb-select {
+  font: inherit;
+  font-size: 14px;
+  color: #f5eef2;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 9px 12px;
+  cursor: pointer;
+}
+
+.emb-select:focus-visible { outline: 2px solid #ffc2d4; outline-offset: 1px; }
+
+/* palette swatches */
+.emb-swatches { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+
+.emb-swatches button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  background: none;
+  color: #b9adc2;
+  font: inherit;
+  font-size: 10.5px;
+  padding: 7px 2px 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  text-transform: capitalize;
+}
+
+.emb-swatches button[aria-checked="true"] {
+  background: rgba(255, 194, 212, 0.14);
+  color: #ffc2d4;
+}
+
+.emb-swatches button:focus-visible { outline: 2px solid #ffc2d4; outline-offset: 1px; }
+
+.emb-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-sizing: border-box;
+}
+
+/* range sliders */
+.emb-range { width: 100%; accent-color: #e0507a; cursor: pointer; margin: 2px 0; }
+
+/* switches */
+.emb-switch {
+  border: 0;
+  background: none;
+  padding: 4px;
+  cursor: pointer;
+  display: inline-flex;
+}
+
+.emb-switch:focus-visible { outline: 2px solid #ffc2d4; outline-offset: 2px; border-radius: 999px; }
+
+.emb-track {
+  width: 40px;
+  height: 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  position: relative;
+  transition: background 0.15s;
+  display: block;
+}
+
+.emb-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  transition: translate 0.15s;
+  display: block;
+}
+
+.emb-switch[aria-checked="true"] .emb-track { background: #e0507a; }
+.emb-switch[aria-checked="true"] .emb-knob { translate: 18px 0; }
+
+/* ---- preview -------------------------------------------------------------------- */
+
+.emb-stage { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+
+.emb-preview {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #14101d;
+  min-height: 240px;
+}
+
+/* shows through when the background is set to transparent */
+.emb-preview.transparent {
+  background:
+    linear-gradient(45deg, #241c31 25%, transparent 25%, transparent 75%, #241c31 75%),
+    linear-gradient(45deg, #241c31 25%, transparent 25%, transparent 75%, #241c31 75%),
+    #191324;
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
+}
+
+#preview { width: 100%; height: 100%; }
+
+.emb-preview petalfall { display: block; width: 100%; height: 100%; }
+
+.emb-regrow {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(26, 19, 34, 0.72);
+  color: #f5eef2;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.15s;
+}
+
+.emb-regrow:hover { background: rgba(26, 19, 34, 0.9); }
+.emb-regrow:focus-visible { outline: 2px solid #ffc2d4; outline-offset: 1px; }
+
+/* ---- code panel ------------------------------------------------------------------ */
+
+.emb-code {
+  background: #14101d;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.emb-codebar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.emb-tabs { display: flex; gap: 4px; }
+
+.emb-tabs button {
+  border: 0;
+  background: none;
+  color: #9b8fa5;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.emb-tabs button[aria-selected="true"] {
+  background: rgba(255, 194, 212, 0.16);
+  color: #ffc2d4;
+}
+
+.emb-tabs button:focus-visible { outline: 2px solid #ffc2d4; outline-offset: 1px; }
+
+.emb-copy {
+  margin-left: auto;
+  border: 0;
+  background: #e0507a;
+  color: #fff;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+}
+
+.emb-copy:hover { background: #ea6289; }
+.emb-copy:active { transform: scale(0.97); }
+.emb-copy:focus-visible { outline: 2px solid #ffc2d4; outline-offset: 1px; }
+.emb-copy.copied { background: #3f9d63; }
+
+.emb-pre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow: auto;
+  max-height: 380px;
+}
+
+.emb-pre code {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #d9cfe0;
+  white-space: pre;
+}
+
+.emb-hint {
+  margin: 0;
+  padding: 10px 18px 14px;
+  font-size: 12.5px;
+  color: #9b8fa5;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.emb-hint code {
+  font-family: ui-monospace, Consolas, monospace;
+  color: #ffc2d4;
+}
+
+/* ---- toast ----------------------------------------------------------------------- */
+
+.emb-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  translate: -50% 0;
+  background: #2a2138;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f5eef2;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, translate 0.25s;
+}
+
+.emb-toast.show { opacity: 1; translate: -50% -6px; }
+
+/* ---- small screens ---------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .emb-main { grid-template-columns: 1fr; padding: 14px 12px 26px; }
+  .emb-preview { min-height: 300px; }
+  .emb-pre { max-height: 300px; }
+}

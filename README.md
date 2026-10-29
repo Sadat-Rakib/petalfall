@@ -78,6 +78,10 @@ Regrow the tree, change the weather, switch to the bonsai. The app itself is the
 
 **Live demo: [petalfall-cyn.pages.dev](https://petalfall-cyn.pages.dev)**
 
+**Embed builder:** pick options with a live preview and copy ready to use code at
+[petalfall-cyn.pages.dev/embed.html](https://petalfall-cyn.pages.dev/embed.html). There is an
+Embed button in the app's control bar too.
+
 ## Tech stack
 
 * **TypeScript** for all of the code.
@@ -123,44 +127,26 @@ To stop the app, press `Ctrl` and `C` together in the terminal.
 
 ## How to use it on your own website
 
-### The simple way, with one script tag
+### Plain HTML, no build tools
 
-1. In the project folder, build the library file once:
+Add two lines to any HTML file. No installs, no build step:
+
+```html
+<script src="https://unpkg.com/petalfall"></script>
+
+<petal-fall style="width: 100%; height: 420px"></petal-fall>
+```
+
+The script pulls the library from a CDN and the tag grows a tree inside itself. Give the tag a
+width and a height, and pick options from the table below. If you would rather host the file
+yourself, run `npm run build:lib` in this project and copy `lib/petalfall.iife.js` next to your
+HTML file, then point the script at it.
+
+### From npm, in any bundled project
 
 ```bash
-npm run build:lib
+npm install petalfall
 ```
-
-2. Copy `lib/petalfall.iife.js` into the same folder as your HTML file.
-3. Add two lines to that HTML file:
-
-```html
-<script src="petalfall.iife.js"></script>
-
-<petalfall palette="lavender" weather="moonlight" style="height: 420px"></petalfall>
-```
-
-That is the whole thing. The `<petalfall>` tag grows a tree inside itself. Give it a width and a
-height, and pick options from the table below.
-
-### As a page background
-
-Add a small script and the tree draws behind everything else on the page. Only the tree, the petals
-and the rain are drawn, so your page shows through, and clicks still reach your buttons.
-
-```html
-<script src="petalfall.iife.js"></script>
-<script>
-  window.Petalfall.createPetalfall(document.body, {
-    background: "transparent",
-    interactive: false
-  });
-</script>
-```
-
-### In a React, Vue, Svelte or Astro project
-
-Once the package is on npm, install it with `npm install petalfall` and then:
 
 ```js
 import { createPetalfall } from "petalfall";
@@ -172,18 +158,77 @@ const petalfall = createPetalfall("#hero", {
 });
 ```
 
-Until then, use the script tag way above. You can also import `petalfall/element` to register the
-`<petalfall>` tag inside a bundled project.
+The scene follows the size of its container, redraws on resize, and pauses when scrolled out of
+view. When you are done with it, call `petalfall.destroy()` and everything it added to the page is
+removed. Create it after the page exists, for example in an effect, a mounted hook or an
+`onMount`.
+
+### React and Next.js
+
+Use a ref and an effect so the tree is created on the client and cleaned up when the component
+unmounts. The `"use client"` line is needed in Next.js and harmless anywhere else.
+
+```jsx
+"use client";
+
+import { useEffect, useRef } from "react";
+import { createPetalfall } from "petalfall";
+
+export default function PetalfallTree() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const petalfall = createPetalfall(ref.current!, { weather: "moonlight", rain: true });
+    return () => petalfall.destroy();
+  }, []);
+
+  return <div ref={ref} style={{ width: "100%", height: 420 }} />;
+}
+```
+
+### Vue
+
+```vue
+<script setup>
+import { onBeforeUnmount, onMounted, ref } from "vue";
+import { createPetalfall } from "petalfall";
+
+const stage = ref(null);
+let petalfall;
+
+onMounted(() => {
+  petalfall = createPetalfall(stage.value, { weather: "sunset", palette: "peach" });
+});
+
+onBeforeUnmount(() => {
+  petalfall?.destroy();
+});
+</script>
+
+<template>
+  <div ref="stage" style="width: 100%; height: 420px"></div>
+</template>
+```
+
+You can also use the `<petal-fall>` tag directly in Vue templates after importing
+`petalfall/element` on the client.
+
+### As a page background
+
+Only the tree, the petals and the rain are drawn, so your page shows through, and clicks still
+reach your buttons:
+
+```js
+createPetalfall(document.body, { background: "transparent", interactive: false });
+```
 
 ### Changing things later
 
-Call methods on the object you got back, or change the attributes of the tag:
-
 ```js
-petalfall.set({ palette: "mint", rain: true });
-petalfall.regrow();      // a brand new tree
-petalfall.gust();        // a burst of wind
-petalfall.destroy();     // remove it from the page
+petalfall.set({ palette: "mint", rain: true }); // recolour and turn on the rain
+petalfall.regrow();                             // a brand new tree
+petalfall.gust();                               // a burst of wind
+petalfall.destroy();                            // remove it from the page
 ```
 
 ### The options

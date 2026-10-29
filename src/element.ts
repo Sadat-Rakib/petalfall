@@ -1,12 +1,12 @@
 import { createPetalfall, DEFAULTS, TREE_DEFAULTS, TREES, type Petalfall, type PetalfallOptions } from "./petalfall";
 
-// <petalfall palette="lavender" form="shidare" weather="rain" rain></petalfall>
-// <petalfall tree="bonsai" form="kengai" palette="maple"></petalfall>
+// <petal-fall palette="lavender" form="shidare" weather="rain" rain></petal-fall>
+// <petal-fall tree="bonsai" form="kengai" palette="maple"></petal-fall>
 //
 // Importing this file registers the element. Style it like any block: give it a width and a height.
 const ATTRIBUTES = ["tree", "palette", "form", "detail", "petals", "wind", "weather", "rain", "background", "fps", "seed", "interactive", "cursor", "sound"] as const;
 
-const STYLE_ID = "petalfall-style";
+const STYLE_ID = "petal-fall-style";
 
 export class PetalfallElement extends HTMLElement {
   static observedAttributes = [...ATTRIBUTES];
@@ -22,7 +22,7 @@ export class PetalfallElement extends HTMLElement {
     if (!document.getElementById(STYLE_ID)) {
       const style = document.createElement("style");
       style.id = STYLE_ID;
-      style.textContent = "petalfall{display:block;position:relative;min-height:240px;overflow:hidden}";
+      style.textContent = "petal-fall{display:block;position:relative;min-height:240px;overflow:hidden}";
       document.head.prepend(style); // first, so any style of yours wins
     }
     if (!this.petalfall) this.petalfall = createPetalfall(this, this.read());
@@ -73,6 +73,6 @@ export class PetalfallElement extends HTMLElement {
   }
 }
 
-if (typeof customElements !== "undefined" && !customElements.get("petalfall")) {
-  customElements.define("petalfall", PetalfallElement);
+if (typeof customElements !== "undefined" && !customElements.get("petal-fall")) {
+  customElements.define("petal-fall", PetalfallElement);
 }

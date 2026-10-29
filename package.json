@@ -1,7 +1,10 @@
 {
   "name": "petalfall",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A procedurally grown cherry blossom tree or bonsai for your page: falling petals, wandering wind, weather and rain. Plain TypeScript and Canvas, about 21 KB gzipped, no dependencies.",
+  "engines": {
+    "node": ">=20"
+  },
   "keywords": [
     "petalfall",
     "sakura",
@@ -66,7 +69,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "build:lib": "node -e \"require('fs').rmSync('lib',{recursive:true,force:true})\" && vite build -c vite.lib.config.ts && vite build -c vite.cdn.config.ts && tsc -p tsconfig.lib.json",
-    "prepublishOnly": "npm run build:lib"
+    "prepublishOnly": "npm run build:lib",
+    "prepare": "npm run build:lib"
   },
   "devDependencies": {
     "typescript": "^7.0.2",

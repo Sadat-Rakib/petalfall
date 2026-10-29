@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1a1322" />
+    <meta
+      name="description"
+      content="Customise a Petalfall tree with a live preview and copy ready to use code for any website, React or Vue."
+    />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Embed builder | Petalfall</title>
+    <style>
+      /* Shown before the stylesheet arrives, and always in development where the stylesheet is
+         added by script: a dark page, and no half-styled controls. embed.css turns the body on. */
+      html { background: #1a1322; }
+      body { margin: 0; visibility: hidden; }
+    </style>
+    <noscript><style>body { visibility: visible; }</style></noscript>
+  </head>
+  <body>
+    <header class="emb-header">
+      <a class="emb-brand" href="./index.html" title="Back to the app">
+        <span class="emb-kanji">花吹雪</span> <span>Petalfall</span>
+      </a>
+      <span class="emb-title">Embed builder</span>
+      <span class="emb-spacer"></span>
+      <a class="emb-app-link" href="./index.html">Open the app</a>
+    </header>
+
+    <main class="emb-main">
+      <aside class="emb-panel" aria-label="Tree options">
+        <div class="emb-group">
+          <span class="emb-label">Tree</span>
+          <div class="emb-seg" id="seg-tree" role="radiogroup" aria-label="Tree type"></div>
+        </div>
+
+        <div class="emb-group">
+          <label class="emb-label" for="sel-form">Shape</label>
+          <select class="emb-select" id="sel-form"></select>
+        </div>
+
+        <div class="emb-group">
+          <span class="emb-label" id="palette-label-text">Colour</span>
+          <div class="emb-swatches" id="swatches" role="radiogroup" aria-labelledby="palette-label-text"></div>
+        </div>
+
+        <div class="emb-group">
+          <span class="emb-label">Weather</span>
+          <div class="emb-seg emb-seg-wrap" id="seg-weather" role="radiogroup" aria-label="Weather"></div>
+        </div>
+
+        <div class="emb-group emb-row">
+          <span class="emb-label">Rain</span>
+          <button class="emb-switch" id="sw-rain" type="button" role="switch" aria-checked="false">
+            <span class="emb-track"><span class="emb-knob"></span></span>
+          </button>
+        </div>
+
+        <div class="emb-group">
+          <label class="emb-label" for="rng-wind">Wind <span class="emb-value" id="val-wind"></span></label>
+          <input class="emb-range" type="range" id="rng-wind" min="0" max="10" step="1" value="3" />
+        </div>
+
+        <div class="emb-group" id="group-petals">
+          <label class="emb-label" for="rng-petals">Petals <span class="emb-value" id="val-petals"></span></label>
+          <input class="emb-range" type="range" id="rng-petals" min="1" max="10" step="1" value="5" />
+        </div>
+
+        <div class="emb-group">
+          <span class="emb-label">Background</span>
+          <div class="emb-seg" id="seg-background" role="radiogroup" aria-label="Background"></div>
+        </div>
+
+        <div class="emb-group">
+          <span class="emb-label">Detail mode</span>
+          <button class="emb-switch" id="sw-detail" type="button" role="switch" aria-checked="false">
+            <span class="emb-track"><span class="emb-knob"></span></span>
+          </button>
+        </div>
+
+        <div class="emb-group">
+          <span class="emb-label">Height</span>
+          <div class="emb-seg" id="seg-height" role="radiogroup" aria-label="Embed height"></div>
+        </div>
+      </aside>
+
+      <section class="emb-stage">
+        <div class="emb-preview" id="preview-box">
+          <div id="preview"></div>
+          <button class="emb-regrow" id="btn-regrow" type="button" title="Regrow the tree">Regrow</button>
+        </div>
+
+        <div class="emb-code">
+          <div class="emb-codebar">
+            <div class="emb-tabs" id="tabs" role="tablist" aria-label="Code format"></div>
+            <button class="emb-copy" id="btn-copy" type="button">Copy code</button>
+          </div>
+          <pre class="emb-pre"><code id="code"></code></pre>
+          <p class="emb-hint">
+            The script tag pulls the library from a CDN. You can also install it with
+            <code>npm install petalfall</code>, or self host <code>petalfall.iife.js</code>.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <div class="emb-toast" id="toast" role="status"></div>
+
+    <script type="module" src="/src/embed.ts"></script>
+  </body>
+</html>
